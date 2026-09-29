@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Databel Churn Review</title>
+<meta name="description" content="Interactive web version of a 4-page Power BI executive report on Databel customer churn.">
+<meta property="og:title" content="Databel Churn Review · interactive Power BI report replica">
+<meta property="og:description" content="6,687 telecom customers, 26.9% churned. Explore why: contracts, service calls, plan fit and who leaves.">
+<meta property="og:image" content="img/1-executive-summary.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap masthead-row">
+    <div>
+      <p class="eyebrow">Databel · Customer churn review</p>
+      <h1 class="site-title">Why 1 in 4 Databel customers left</h1>
+      <p class="lede">An interactive web version of a four-page Power BI report. Use the filters to slice all 6,687 customers; every chart recalculates.</p>
+    </div>
+    <nav class="links" aria-label="Project links">
+      <a class="btn" href="https://github.com/JunayedParves/Databel-Churn-PowerBI">GitHub repository</a>
+      <a class="btn ghost" href="#power-bi">Power BI screenshots</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="report wrap" aria-label="Interactive report">
+    <div class="toolbar">
+      <div class="tabs" role="tablist" aria-label="Report pages">
+        <button role="tab" id="tab-summary" aria-controls="page-summary" aria-selected="true">Executive Summary</button>
+        <button role="tab" id="tab-contract" aria-controls="page-contract" aria-selected="false" tabindex="-1">Contract &amp; Tenure</button>
+        <button role="tab" id="tab-service" aria-controls="page-service" aria-selected="false" tabindex="-1">Service &amp; Plan Fit</button>
+        <button role="tab" id="tab-who" aria-controls="page-who" aria-selected="false" tabindex="-1">Who Churns</button>
+      </div>
+      <div class="filters" role="group" aria-label="Filters">
+        <label>State<select id="f-state"></select></label>
+        <label>Age group<select id="f-age"></select></label>
+        <label>Contract type<select id="f-contract"></select></label>
+        <label>Gender<select id="f-gender"></select></label>
+        <button type="button" id="f-reset" class="reset">Reset</button>
+      </div>
+      <p class="selection" id="selection" aria-live="polite"></p>
+    </div>
+
+    <article class="page" id="page-summary" role="tabpanel" aria-labelledby="tab-summary">
+      <h2 class="headline">Databel lost 1 in 4 customers and a third of monthly revenue, driven mostly by competitor offers and poor service</h2>
+      <p class="subhead">Churn = customers with Churn Label = Yes</p>
+      <div class="kpis" id="kpis"></div>
+      <div class="grid3">
+        <section class="panel"><h3>Churn category, % of churned customers</h3><div id="c-category"></div></section>
+        <section class="panel"><h3>Top 5 churn reasons, # customers</h3><div id="c-reasons"></div></section>
+        <section class="panel recommend">
+          <h3>What we recommend</h3>
+          <ol>
+            <li>Move month-to-month customers onto 1–2 year contracts; they churn at 46% vs 3% on two-year plans.</li>
+            <li>Escalate any customer on their 3rd support call; 88–100% of them leave.</li>
+            <li>Fix plan mismatch: sell the international plan to active callers and push group plans, which churn at 7%.</li>
+          </ol>
+        </section>
+      </div>
+      <p class="source">Source: Databel customer dataset, n = 6,687 customers. Revenue at risk = sum of Monthly Charge for churned customers.</p>
+    </article>
+
+    <article class="page" id="page-contract" role="tabpanel" aria-labelledby="tab-contract" hidden>
+      <h2 class="headline" id="contract-headline"></h2>
+      <p class="subhead">Churn rate, % of customers in each segment</p>
+      <div class="grid3">
+        <section class="panel"><h3>By contract type</h3><div id="c-contract"></div></section>
+        <section class="panel"><h3>By tenure, months with Databel</h3><div id="c-tenure"></div></section>
+        <section class="panel">
+          <h3>By payment method</h3><div id="c-payment"></div>
+          <div class="sowhat"><strong>So what</strong>Offer a discount or device upgrade for switching to a 12-month contract, and target the first six months with onboarding check-ins. Credit-card payers churn at less than half the rate of direct-debit and paper-check payers.</div>
+        </section>
+      </div>
+      <p class="source">Source: Databel customer dataset, n = 6,687. Tenure = Account Length (in months).</p>
+    </article>
+
+    <article class="page" id="page-service" role="tabpanel" aria-labelledby="tab-service" hidden>
+      <h2 class="headline">A third support call is the tipping point, and customers on the wrong plan leave far more often</h2>
+      <p class="subhead">Churn rate, % of customers in each segment</p>
+      <div class="grid3 wide-first">
+        <section class="panel"><h3>By number of customer service calls</h3><div id="c-calls"></div><p class="note" id="calls-note"></p></section>
+        <section class="panel"><h3>International plan fit</h3><div id="c-intl"></div><p class="note">Rows: has an international plan. Columns: makes international calls. Paying for an unused plan is the worst fit.</p></section>
+        <section class="panel">
+          <h3>Plans and add-ons</h3>
+          <h4>Unlimited data plan</h4><div id="c-unlimited"></div>
+          <h4>Device protection &amp; online backup</h4><div id="c-device"></div>
+          <div class="sowhat"><strong>So what</strong>Route any customer with 2+ calls to a retention team, and review plan fit every quarter.</div>
+        </section>
+      </div>
+      <p class="source">Source: Databel customer dataset, n = 6,687. 5+ calls grouped.</p>
+    </article>
+
+    <article class="page" id="page-who" role="tabpanel" aria-labelledby="tab-who" hidden>
+      <h2 class="headline">Seniors on month-to-month contracts are the highest-risk group, while group plans almost eliminate churn</h2>
+      <p class="subhead">Churn rate, % of customers in each segment</p>
+      <div class="grid3">
+        <section class="panel"><h3>By age group</h3><div id="c-age"></div><h4>Senior × contract</h4><div id="c-senior"></div></section>
+        <section class="panel"><h3>Group vs individual plans</h3><div class="kpis two" id="c-group"></div><h4>By gender</h4><div id="c-gender"></div></section>
+        <section class="panel">
+          <h3>Highest-churn states, top 10</h3><div id="c-states"></div>
+          <div class="sowhat"><strong>So what</strong>Build a senior retention offer and promote family and group bundles. Investigate California, where 63% of a small base left.</div>
+        </section>
+      </div>
+      <p class="source">Source: Databel customer dataset, n = 6,687. Senior = age 65+. CA has only 68 customers.</p>
+    </article>
+    <p class="colour-key"><span><span class="sw hi"></span>Orange marks the problem (churn ≥ 35%)</span><span><span class="sw good"></span>Blue marks the benchmark (churn &lt; 10%)</span><span><span class="sw mid"></span>Grey is everything else</span></p>
+  </section>
+
+  <section class="wrap about" id="power-bi">
+    <h2>The original Power BI report</h2>
+    <p>The source of truth is a Power BI Project (PBIP) with a TMDL semantic model and a PBIR report: one import table, 16 DAX measures, field-value conditional colours, synced slicers and a custom theme. These are screenshots from Power BI Desktop; this page recomputes the same measures in the browser from the same CSV.</p>
+    <div class="shots">
+      <figure><a href="img/1-executive-summary.png"><img src="img/1-executive-summary.png" alt="Power BI page 1, Executive Summary: KPI row, churn categories, top 5 reasons, recommendations" loading="lazy"></a><figcaption>1 · Executive Summary</figcaption></figure>
+      <figure><a href="img/2-contract-tenure.png"><img src="img/2-contract-tenure.png" alt="Power BI page 2, Contract and Tenure: churn by contract type, tenure and payment method" loading="lazy"></a><figcaption>2 · Contract &amp; Tenure</figcaption></figure>
+      <figure><a href="img/3-service-plan-fit.png"><img src="img/3-service-plan-fit.png" alt="Power BI page 3, Service and Plan Fit: churn by service calls, international plan matrix, plans and add-ons" loading="lazy"></a><figcaption>3 · Service &amp; Plan Fit</figcaption></figure>
+      <figure><a href="img/4-who-churns.png"><img src="img/4-who-churns.png" alt="Power BI page 4, Who Churns: age, senior by contract, group vs individual, gender, top 10 states" loading="lazy"></a><figcaption>4 · Who Churns</figcaption></figure>
+    </div>
+    <p>Download the project from <a href="https://github.com/JunayedParves/Databel-Churn-PowerBI">GitHub</a> and open <code>Databel Churn.pbip</code> in Power BI Desktop. The README explains the setup.</p>
+  </section>
+</main>
+
+<footer class="wrap footer">
+  <p>Built by M K Junayed Parves · Data: Databel customer dataset (6,687 customers, 29 columns)</p>
+</footer>
+
+<div class="tooltip" id="tooltip" role="status" hidden></div>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

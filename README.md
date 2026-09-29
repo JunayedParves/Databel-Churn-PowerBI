@@ -3,6 +3,10 @@
 A 4-page executive report on Databel customer churn, saved as a Power BI Project
 (PBIP) with a TMDL semantic model and a PBIR report.
 
+**Live interactive version:** https://junayedparves.github.io/Databel-Churn-PowerBI/
+is a browser replica of all four pages with filters (state, age group, contract type,
+gender), computed from the same CSV. You don't need Power BI to view it.
+
 | Page | What it shows |
 |---|---|
 | 1 Executive Summary | KPI row, churn categories, top 5 reasons, recommendations |
@@ -92,5 +96,6 @@ data/                          Databel - Data.csv (6,687 customers, 29 columns)
 Databel Churn.SemanticModel/   TMDL model: Databel table, _Measures table, DataFolder parameter
 Databel Churn.Report/          PBIR report: 4 pages, custom theme registered in StaticResources
 validate.py                    pandas check of the brief's validation figures
-_build/                        generator + validator scripts
+docs/                          GitHub Pages site: interactive web version + screenshots
+_build/                        generator + validator scripts (build_web.py rebuilds docs/data.js)
 ```

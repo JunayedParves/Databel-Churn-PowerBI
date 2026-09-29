@@ -840,7 +840,7 @@ def build_project():
         "artifacts": [{"report": {"path": f"{NAME}.Report"}}],
         "settings": {"enableAutoRecovery": True},
     })
-    write(ROOT / ".gitignore", "**/.pbi/localSettings.json\n**/.pbi/cache.abf\n__pycache__/\n")
+    write(ROOT / ".gitignore", "**/.pbi/localSettings.json\n**/.pbi/cache.abf\n__pycache__/\n.claude/\n")
 
 
 if __name__ == "__main__":
