@@ -1,0 +1,77 @@
+table _Measures
+	lineageTag: 14348f3a-8f6d-9f27-664d-6c3e317e4acb
+
+	measure 'Total Customers' = COUNTROWS(Databel)
+		formatString: #,0
+		lineageTag: e75ca3f6-73a2-6dfd-def7-f6023c42d6c3
+
+	measure 'Churned Customers' = CALCULATE([Total Customers], Databel[Churn Label] = "Yes")
+		formatString: #,0
+		lineageTag: a8a9e8ef-5002-216a-2b63-014da83dbabc
+
+	measure 'Churn Rate' = DIVIDE([Churned Customers], [Total Customers])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 04526bc0-adb4-fdfd-a7a0-2045e2ba07bb
+
+	measure 'Total Monthly Revenue' = SUM(Databel[Monthly Charge])
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 4079d54f-29f6-2917-e67f-9939c22ec03f
+
+	measure 'Monthly Revenue Lost' = CALCULATE([Total Monthly Revenue], Databel[Churn Label] = "Yes")
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 93c5e046-1603-910c-c156-00f6818397f4
+
+	measure 'Revenue Lost %' = DIVIDE([Monthly Revenue Lost], [Total Monthly Revenue])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 853ef9ca-2ed5-8280-b909-d6cd72da8577
+
+	measure 'Share of Churners' = DIVIDE([Churned Customers], CALCULATE([Churned Customers], ALLSELECTED(Databel[Churn Category])))
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: eee984e8-ff83-f053-1042-a7989b5df29f
+
+	measure 'Group Churn Rate' = CALCULATE([Churn Rate], Databel[Group] = "Yes")
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 38cfcc9a-68bf-cb4c-44e8-b2a080294a29
+
+	measure 'Non-Group Churn Rate' = CALCULATE([Churn Rate], Databel[Group] = "No")
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 7e19d3a6-b7fc-a834-4570-0795b99603fc
+
+	measure 'M2M Churn Rate' = CALCULATE([Churn Rate], Databel[Contract Type] = "Month-to-Month")
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 4e43607d-c11d-3266-74e9-93577c611182
+
+	measure 'Two Year Churn Rate' = CALCULATE([Churn Rate], Databel[Contract Type] = "Two Year")
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: a1ff6abf-997c-1670-9c81-38d7fbcc53bf
+
+	measure 'Revenue Lost Subtitle' = FORMAT([Revenue Lost %], "0%") & " of $" & FORMAT([Total Monthly Revenue]/1000, "0.0") & "K total"
+		lineageTag: d2b1f53e-9ad7-662c-5d22-a6c25564a87d
+
+	measure 'Group Subtitle' = IF(ISBLANK([Non-Group Churn Rate]), "No non-group customers in selection", "vs " & FORMAT([Non-Group Churn Rate], "0.0%") & " non-group")
+		lineageTag: 1b4b9a42-36c0-8662-af64-3a4b879813ad
+
+	measure 'Contract Headline' = "Month-to-month customers churn " & FORMAT(DIVIDE([M2M Churn Rate],[Two Year Churn Rate]), "0") & "× more than two-year customers, and " & FORMAT(CALCULATE([Churn Rate], Databel[Tenure Group] = "0-6"), "0%") & " of new customers leave within six months"
+		lineageTag: 72f8cae8-47d2-fc06-c34e-55794fac0ea2
+
+	measure 'Churn Colour' = SWITCH(TRUE(), [Churn Rate] >= 0.35, "#C8471D", [Churn Rate] < 0.10, "#1F4E79", "#9AA3AF")
+		lineageTag: aa2c09f7-da73-4b3e-b7a4-268cfe84be2a
+
+	measure 'Payment Colour' = SWITCH(TRUE(), [Churn Rate] >= 0.35, "#C8471D", [Churn Rate] < 0.15, "#1F4E79", "#9AA3AF")
+		lineageTag: a7679327-dc31-d81b-823e-180f0a22b6d2
+
+	column Column
+		isHidden
+		formatString: 0
+		lineageTag: 381ef9f5-c02f-8a55-2593-ac43ce813361
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 83a1c4b06aa6815a1df0be04d7d10dc1

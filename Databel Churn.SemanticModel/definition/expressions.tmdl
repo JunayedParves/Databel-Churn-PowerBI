@@ -1,0 +1,4 @@
+expression DataFolder = "C:\Users\Junayed\Desktop\Power BI Dashboard\Databel Churn\data" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 39ed4922-24b5-9f52-7194-123582eb99eb
+
+	annotation PBI_ResultType = Text

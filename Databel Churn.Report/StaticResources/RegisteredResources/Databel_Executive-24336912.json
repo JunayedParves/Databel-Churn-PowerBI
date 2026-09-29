@@ -1,0 +1,100 @@
+{
+  "name": "Databel_Executive-24336912.json",
+  "dataColors": [
+    "#C8471D",
+    "#9AA3AF",
+    "#1F4E79",
+    "#E8B4A0",
+    "#0B1F3A",
+    "#5B6472",
+    "#D9DDE3",
+    "#F2A07B"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#0B1F3A",
+  "tableAccent": "#0B1F3A",
+  "good": "#1F4E79",
+  "neutral": "#9AA3AF",
+  "bad": "#C8471D",
+  "maximum": "#C8471D",
+  "center": "#E8B4A0",
+  "minimum": "#EEF0F3",
+  "textClasses": {
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 12,
+      "color": "#0B1F3A"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 11,
+      "color": "#0B1F3A"
+    },
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 10,
+      "color": "#0B1F3A"
+    },
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 28,
+      "color": "#0B1F3A"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            }
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ],
+        "visualHeader": [
+          {
+            "show": false
+          }
+        ],
+        "valueAxis": [
+          {
+            "show": false,
+            "gridlineShow": false
+          }
+        ],
+        "categoryAxis": [
+          {
+            "gridlineShow": false
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    }
+  }
+}

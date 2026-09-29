@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Databel Churn"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "41e3d663-665e-3865-6002-498e8c8a17ac"
+  }
+}
